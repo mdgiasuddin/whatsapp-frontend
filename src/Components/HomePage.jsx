@@ -1,15 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TbCircleDashed} from "react-icons/tb";
 import {BiCommentDetail} from "react-icons/bi";
 import {AiOutlineSearch} from "react-icons/ai";
-import {BsFilter} from "react-icons/bs";
+import {BsFilter, BsThreeDotsVertical} from "react-icons/bs";
 import ChatCard from "./ChatCard/ChatCard";
+import MessageCard from "./MessageCard/MessageCard";
 
 const HomePage = () => {
+    const [querys, setQuerys] = useState(null);
+    const [currentChat, setCurrentChat] = useState(null);
+
+    const handleSearch = () => []
+    const handleClickChatUser = () => [
+        setCurrentChat(true)
+    ]
+
     return (
         <div>
             <div className='py-14 bg-green-500 w-full'></div>
-            <div className='flex bg-gray-50 h-[90vh] absolute top-6 left-6 w-full'>
+            <div className='flex bg-gray-50 h-[90vh] absolute left-[2vw] top-[5vh] w-[96vw]'>
                 <div className='left w-[30%] bg-gray-200 h-full'>
                     <div className='w-full'>
                         <div className='flex justify-between items-center p-3'>
@@ -32,6 +41,11 @@ const HomePage = () => {
                                 className='border-none outline-none bg-slate-200 rounded-md w-[93%] pl-9 py-2'
                                 type='text'
                                 placeholder='Search or start new chat'
+                                onChange={(e) => {
+                                    setQuerys(e.target.value)
+                                    handleSearch(e.target.value)
+                                }}
+                                value={querys}
                             />
                             <AiOutlineSearch className='left-5 top-7 absolute'/>
 
@@ -40,18 +54,58 @@ const HomePage = () => {
                             </div>
                         </div>
 
+                        {/*All users*/}
                         <div className='bg-white overflow-y-scroll h-[76.8vh] px-3'>
                             {
-                                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item) =>
-                                    <div>
+                                querys && [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item) =>
+                                    <div onClick={handleClickChatUser}>
                                         <hr/>
                                         <ChatCard/>
                                     </div>)
                             }
                         </div>
+
                     </div>
                 </div>
-                <div className='right'></div>
+                {/*Default whatsapp page*/}
+                {!currentChat && <div className='w-[70%] flex flex-col items-center justify-center h-full'>
+                    <div className='max-w-[70%] text-center'>
+                        <img
+                            src='https://global.discourse-cdn.com/brave/original/3X/a/5/a57b2034cb4ec01f7f226f7f442a30f64b9ec4f5.png'
+                            alt=''
+                        />
+                        <h1 className='text-4xl text-gray-600'>Whatsapp Web</h1>
+                        <p className='my-9'>Send and receive message without keeping your phone online. Whatsapp on
+                            up to 4 Linked devices and 1 phone at the same time</p>
+                    </div>
+                </div>}
+
+                {/*Message Part*/}
+                {currentChat && <div className='w-[70%] relative'>
+                    <div className='header absolute top-0 w-full bg-gray-300'>
+                        <div className='flex justify-between'>
+                            <div className='py-3 space-x-4 flex items-center px-3'>
+                                <img className='w-10 h-10 rounded-full'
+                                     src='https://cdn.pixabay.com/photo/2013/10/09/02/27/lake-192990_640.jpg' alt=''
+                                />
+                                <p>Username</p>
+                            </div>
+                            <div className='py-3 flex space-x-4 items-center px-3'>
+                                <AiOutlineSearch/>
+                                <BsThreeDotsVertical/>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/*Message section*/}
+                    <div className='px-10 h-[85vh] overflow-y-scroll'>
+                        <div className='space-y-1 flex flex-col justify-center mt-20 py-2'>
+                            {[1, 1, 1, 1, 1, 1].map((item, i) => <MessageCard isReqUserMessage={i % 2 === 0}
+                                                                              content={'Message'}/>)}
+                        </div>
+                    </div>
+                </div>
+                }
             </div>
         </div>
     )
