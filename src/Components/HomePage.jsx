@@ -2,27 +2,51 @@ import React, {useState} from 'react';
 import {TbCircleDashed} from "react-icons/tb";
 import {BiCommentDetail} from "react-icons/bi";
 import {AiOutlineSearch} from "react-icons/ai";
-import {BsFilter, BsThreeDotsVertical} from "react-icons/bs";
+import {BsEmojiSmile, BsFilter, BsMicFill, BsThreeDotsVertical} from "react-icons/bs";
 import ChatCard from "./ChatCard/ChatCard";
 import MessageCard from "./MessageCard/MessageCard";
+import {ImAttachment} from "react-icons/im";
+import './HomePage.css'
+import Profile from "./Profile/Profile";
 
 const HomePage = () => {
     const [querys, setQuerys] = useState(null);
     const [currentChat, setCurrentChat] = useState(null);
+    const [messageContent, setMessageContent] = useState('');
+    const [showProfile, setShowProfile] = useState(false);
 
-    const handleSearch = () => []
-    const handleClickChatUser = () => [
+    const handleSearch = () => {
+    }
+    const handleSendMessage = () => {
+    }
+    const handleClickChatUser = () => {
         setCurrentChat(true)
-    ]
+    }
+
+    const navigateProfile = () => {
+        setShowProfile(true)
+    }
+
+    const handleCloseProfile = () => {
+        setShowProfile(false)
+    }
+
 
     return (
         <div>
             <div className='py-14 bg-green-500 w-full'></div>
-            <div className='flex bg-gray-50 h-[90vh] absolute left-[2vw] top-[5vh] w-[96vw]'>
+            <div className='flex bg-amber-100 h-[90vh] absolute left-[2vw] top-[5vh] w-[96vw]'>
                 <div className='left w-[30%] bg-gray-200 h-full'>
-                    <div className='w-full'>
+
+                    {/* Profile */}
+                    {showProfile &&
+                        <div className='w-full h-full'><Profile handleCloseProfile={handleCloseProfile}/></div>}
+
+
+                    {/* Home */}
+                    {!showProfile && <div className='w-full'>
                         <div className='flex justify-between items-center p-3'>
-                            <div className='flex items-center space-x-3'>
+                            <div onClick={navigateProfile} className='flex items-center space-x-3'>
                                 <img
                                     className='rounded-full w-10 h-10 cursor-pointer'
                                     src='https://cdn.pixabay.com/photo/2023/04/28/20/39/bee-7957348_1280.jpg'
@@ -55,7 +79,7 @@ const HomePage = () => {
                         </div>
 
                         {/*All users*/}
-                        <div className='bg-white overflow-y-scroll h-[76.8vh] px-3'>
+                        <div className='bg-white overflow-y-scroll h-[72vh] px-3'>
                             {
                                 querys && [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item) =>
                                     <div onClick={handleClickChatUser}>
@@ -65,7 +89,7 @@ const HomePage = () => {
                             }
                         </div>
 
-                    </div>
+                    </div>}
                 </div>
                 {/*Default whatsapp page*/}
                 {!currentChat && <div className='w-[70%] flex flex-col items-center justify-center h-full'>
@@ -100,12 +124,36 @@ const HomePage = () => {
                     {/*Message section*/}
                     <div className='px-10 h-[85vh] overflow-y-scroll'>
                         <div className='space-y-1 flex flex-col justify-center mt-20 py-2'>
-                            {[1, 1, 1, 1, 1, 1].map((item, i) => <MessageCard isReqUserMessage={i % 2 === 0}
-                                                                              content={'Message'}/>)}
+                            {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item, i) => <MessageCard
+                                isReqUserMessage={i % 2 === 0}
+                                content={'Message'}/>)}
                         </div>
                     </div>
-                </div>
-                }
+
+                    {/*Footer Part*/}
+                    <div className='footer bg-gray-200 absolute bottom-0 w-full py-3 text-2xl'>
+                        <div className='flex justify-between items-center px-5 relative'>
+                            <BsEmojiSmile className='cursor-pointer'/>
+                            <ImAttachment/>
+
+                            <input
+                                className='py-2 outline-none border-none bg-white pl-4 rounded-md w-[85%]'
+                                type='text'
+                                onChange={(e) => setMessageContent(e.target.value)}
+                                placeholder='Type message'
+                                value={messageContent}
+                                onKeyPress={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleSendMessage();
+                                        setMessageContent('')
+                                    }
+                                }}
+                            />
+                            <BsMicFill/>
+                        </div>
+                    </div>
+
+                </div>}
             </div>
         </div>
     )
