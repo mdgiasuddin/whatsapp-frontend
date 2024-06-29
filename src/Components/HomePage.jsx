@@ -8,12 +8,14 @@ import MessageCard from "./MessageCard/MessageCard";
 import {ImAttachment} from "react-icons/im";
 import './HomePage.css'
 import Profile from "./Profile/Profile";
+import {useNavigate} from "react-router-dom";
 
 const HomePage = () => {
     const [querys, setQuerys] = useState(null);
     const [currentChat, setCurrentChat] = useState(null);
     const [messageContent, setMessageContent] = useState('');
     const [showProfile, setShowProfile] = useState(false);
+    const navigate = useNavigate();
 
     const handleSearch = () => {
     }
@@ -55,7 +57,7 @@ const HomePage = () => {
                                 <p>username</p>
                             </div>
                             <div className='space-x-3 text-2xl flex'>
-                                <TbCircleDashed/>
+                                <TbCircleDashed className='cursor-pointer' onClick={() => navigate('/status')}/>
                                 <BiCommentDetail/>
                             </div>
                         </div>

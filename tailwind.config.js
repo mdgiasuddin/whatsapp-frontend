@@ -69,5 +69,26 @@ module.exports = {
         // MessageCard.jsx
         'py-2 px-2 rounded-md max-w-[50%] self-start bg-white',
         'py-2 px-2 rounded-md max-w-[50%] self-end bg-green-400',
+
+        // Status.jsx
+        'flex items-center px-[14vw] py-[7vh]',
+        'left h-[85vh] bg-slate-900 lg:w-[30%] w-[50%] px-5',
+        'pt-5 h-[13%]',
+        'overflow-y-scroll h-[86%] pt-2',
+        'relative h-[85vh] lg:w-[70%] bg-black',
+        'text-white cursor-pointer absolute top-5 right-10 text-xl',
+
+        // StatusUserCard.jsx
+        'flex items-center p-3 cursor-pointer',
+        'h-7 w-7 lg:w-10 lg:h-10 rounded-full',
+        'ml-2 text-white',
+
+        // StatusViewer.jsx
+        'relative flex justify-center items-center h-[100vh] bg-slate-900',
+        'relative',
+        'max-h-[96vh] object-contain',
+        'absolute top-0 flex w-full',
+        'text-white text-2xl cursor-pointer absolute top-10 left-10',
+        'text-white text-2xl cursor-pointer absolute top-10 right-10'
     ]
 }
