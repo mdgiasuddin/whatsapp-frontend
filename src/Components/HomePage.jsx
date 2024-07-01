@@ -9,12 +9,15 @@ import {ImAttachment} from "react-icons/im";
 import './HomePage.css'
 import Profile from "./Profile/Profile";
 import {useNavigate} from "react-router-dom";
+import {Menu, MenuItem} from "@mui/material";
+import CreateGroup from "./Group/CreateGroup";
 
 const HomePage = () => {
     const [querys, setQuerys] = useState(null);
     const [currentChat, setCurrentChat] = useState(null);
     const [messageContent, setMessageContent] = useState('');
     const [showProfile, setShowProfile] = useState(false);
+    const [showGroup, setShowGroup] = useState(false);
     const navigate = useNavigate();
 
     const handleSearch = () => {
@@ -25,6 +28,16 @@ const HomePage = () => {
         setCurrentChat(true)
     }
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (e) => {
+        setAnchorEl(e.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     const navigateProfile = () => {
         setShowProfile(true)
     }
@@ -33,6 +46,9 @@ const HomePage = () => {
         setShowProfile(false)
     }
 
+    const handleCreateGroup = () => {
+        setShowGroup(true);
+    }
 
     return (
         <div>
@@ -44,9 +60,11 @@ const HomePage = () => {
                     {showProfile &&
                         <div className='w-full h-full'><Profile handleCloseProfile={handleCloseProfile}/></div>}
 
+                    {showGroup && <CreateGroup/>}
+
 
                     {/* Home */}
-                    {!showProfile && <div className='w-full'>
+                    {!showProfile && !showGroup && <div className='w-full'>
                         <div className='flex justify-between items-center p-3'>
                             <div onClick={navigateProfile} className='flex items-center space-x-3'>
                                 <img
@@ -59,6 +77,31 @@ const HomePage = () => {
                             <div className='space-x-3 text-2xl flex'>
                                 <TbCircleDashed className='cursor-pointer' onClick={() => navigate('/status')}/>
                                 <BiCommentDetail/>
+
+                                <div>
+                                    <BsThreeDotsVertical
+                                        id="basic-button"
+                                        aria-controls={open ? 'basic-menu' : undefined}
+                                        aria-haspopup="true"
+                                        aria-expanded={open ? 'true' : undefined}
+                                        onClick={handleClick}
+                                    />
+
+                                    <Menu
+                                        id="basic-menu"
+                                        anchorEl={anchorEl}
+                                        open={open}
+                                        onClose={handleClose}
+                                        MenuListProps={{
+                                            'aria-labelledby': 'basic-button',
+                                        }}
+                                    >
+                                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                        <MenuItem onClick={handleCreateGroup}>Create Group</MenuItem>
+                                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                    </Menu>
+                                </div>
+
                             </div>
                         </div>
 

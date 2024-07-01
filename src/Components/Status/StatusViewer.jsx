@@ -10,24 +10,21 @@ const StatusViewer = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const navigate = useNavigate();
 
-    const handleNextStory = () => {
-        if (currentIndex < stories?.length - 1) {
-            setCurrentIndex(currentIndex + 1);
-            setActiveIndex(activeIndex + 1);
-        } else {
-            setCurrentIndex(0);
-            setActiveIndex(0);
-        }
-    }
-
     useEffect(() => {
         const intervalId = setInterval(() => {
-            handleNextStory();
+            if (currentIndex < stories?.length - 1) {
+                setCurrentIndex(currentIndex + 1);
+                setActiveIndex(activeIndex + 1);
+            } else {
+                setCurrentIndex(0);
+                setActiveIndex(0);
+            }
+
         }, 2000);
 
         return () => clearInterval(intervalId);
 
-    }, [currentIndex]);
+    }, [activeIndex, currentIndex]);
 
     const handleClose = () => {
         navigate(-1);

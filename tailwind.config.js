@@ -89,6 +89,23 @@ module.exports = {
         'max-h-[96vh] object-contain',
         'absolute top-0 flex w-full',
         'text-white text-2xl cursor-pointer absolute top-10 left-10',
-        'text-white text-2xl cursor-pointer absolute top-10 right-10'
+        'text-white text-2xl cursor-pointer absolute top-10 right-10',
+
+        // CreateGroup.jsx
+        'w-full h-full',
+        'flex items-center space-x-10 bg-green-800 text-white pt-16 px-10 pb-5',
+        'cursor-pointer text-2xl font-bold',
+        'text-xl font-semibold',
+        'relative bg-white py-4 px-3',
+        'flex space-x-2 flex-wrap space-y-1',
+        'outline-none border-b border-b-slate-900 p-2 w-[93%]',
+        'bg-white overflow-y-scroll h-[50.2vh]',
+        'bottom-10 py-10 bg-slate-700 items-center justify-center',
+        'text-white font-bold text-3xl',
+
+        // SelectedMember.jsx
+        'flex items-center bg-slate-300 rounded-full',
+        'w-7 h-7 rounded-full',
+
     ]
 }
