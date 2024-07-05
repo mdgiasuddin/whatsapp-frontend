@@ -60,8 +60,9 @@ const CreateGroup = () => {
                                 </div>)}
                         </div>
 
-                        <div className='bottom-10 py-10 bg-slate-700 items-center justify-center'>
-                            <div onClick={() => {
+                        <div className='bottom-10 py-10 bg-slate-200 flex items-center justify-center'>
+                            <div className='bg-green-800 rounded-full p-4 cursor-pointer'
+                                 onClick={() => {
                                 setNewGroup(true)
                             }}>
                                 <BsArrowRight className='text-white font-bold text-3xl'></BsArrowRight>

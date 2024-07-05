@@ -100,12 +100,27 @@ module.exports = {
         'flex space-x-2 flex-wrap space-y-1',
         'outline-none border-b border-b-slate-900 p-2 w-[93%]',
         'bg-white overflow-y-scroll h-[50.2vh]',
-        'bottom-10 py-10 bg-slate-700 items-center justify-center',
+        'bottom-10 py-10 bg-slate-200 flex items-center justify-center',
+        'bg-gray-600 rounded-full p-4 cursor-pointer',
         'text-white font-bold text-3xl',
 
         // SelectedMember.jsx
         'flex items-center bg-slate-300 rounded-full',
         'w-7 h-7 rounded-full',
 
+        // NewGroup.jsx
+        'w-full h-full',
+        'flex items-center space-x-10 bg-green-800 text-white pt-16 px-10 pb-5',
+        'cursor-pointer text-2xl font-bold',
+        'text-xl font-semibold',
+        'flex flex-col justify-center items-center my-12',
+        'relative',
+        'absolute top-[5rem] left-[6rem]',
+        'hidden',
+        'w-full flex justify-center items-center py-2 px-5',
+        'w-full outline-none border-b-2 border-green-700 px-2 bg-transparent',
+        'py-10 bg-slate-200 flex items-center justify-center',
+        'bg-green-700 rounded-full p-4',
+        'text-white font-bold text-3xl'
     ]
 }
