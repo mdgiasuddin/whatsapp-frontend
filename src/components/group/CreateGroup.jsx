@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {BsArrowLeft, BsArrowRight} from "react-icons/bs";
 import SelectedMember from "./SelectedMember";
-import ChatCard from "../ChatCard/ChatCard";
+import ChatCard from "../chatCard/ChatCard";
 import NewGroup from "./NewGroup";
 
 const CreateGroup = () => {

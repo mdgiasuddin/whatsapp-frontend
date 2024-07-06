@@ -3,14 +3,14 @@ import {TbCircleDashed} from "react-icons/tb";
 import {BiCommentDetail} from "react-icons/bi";
 import {AiOutlineSearch} from "react-icons/ai";
 import {BsEmojiSmile, BsFilter, BsMicFill, BsThreeDotsVertical} from "react-icons/bs";
-import ChatCard from "./ChatCard/ChatCard";
-import MessageCard from "./MessageCard/MessageCard";
+import ChatCard from "./chatCard/ChatCard";
+import MessageCard from "./messageCard/MessageCard";
 import {ImAttachment} from "react-icons/im";
 import './HomePage.css'
-import Profile from "./Profile/Profile";
+import Profile from "./profile/Profile";
 import {useNavigate} from "react-router-dom";
 import {Menu, MenuItem} from "@mui/material";
-import CreateGroup from "./Group/CreateGroup";
+import CreateGroup from "./group/CreateGroup";
 
 const HomePage = () => {
     const [querys, setQuerys] = useState(null);
@@ -56,7 +56,7 @@ const HomePage = () => {
             <div className='flex bg-amber-100 h-[90vh] absolute left-[2vw] top-[5vh] w-[96vw]'>
                 <div className='left w-[30%] bg-gray-200 h-full'>
 
-                    {/* Profile */}
+                    {/* profile */}
                     {showProfile &&
                         <div className='w-full h-full'><Profile handleCloseProfile={handleCloseProfile}/></div>}
 

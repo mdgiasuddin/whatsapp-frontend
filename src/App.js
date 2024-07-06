@@ -1,8 +1,8 @@
 import './App.css';
 import {Route, Routes} from "react-router-dom";
-import HomePage from "./Components/HomePage";
-import Status from "./Components/Status/Status";
-import StatusViewer from "./Components/Status/StatusViewer";
+import HomePage from "./components/HomePage";
+import Status from "./components/status/Status";
+import StatusViewer from "./components/status/StatusViewer";
 
 function App() {
     return (

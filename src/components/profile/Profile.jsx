@@ -24,7 +24,7 @@ const Profile = ({handleCloseProfile}) => {
                 <p className='cursor-pointer font-semibold'>Profile</p>
             </div>
 
-            {/* Profile picture section */}
+            {/* profile picture section */}
             <div className='flex flex-col justify-center items-center my-12'>
                 <label htmlFor='imgInput'>
                     <img

@@ -36,7 +36,7 @@ module.exports = {
         'cursor-pointer',
         'py-2 outline-none border-none bg-white pl-4 rounded-md w-[85%]',
 
-        // Profile.jsx
+        // profile.jsx
         'w-full h-full',
         'flex items-center space-x-10 bg-green-900 text-white pt-16 px-10 pb-5',
         'cursor-pointer text-2xl font-bold',
@@ -55,7 +55,7 @@ module.exports = {
         'px-3 my-5',
         'py-10',
 
-        // ChatCard.jsx
+        // chatCard.jsx
         'flex items-center justify-center py-2 group cursor-pointer',
         'w-[20%]',
         'h-14 w-14 rounded-full',
@@ -66,11 +66,11 @@ module.exports = {
         'flex space-x-2 items-center',
         'text-xs py-1 px-2 text-white bg-green-500 rounded-full',
 
-        // MessageCard.jsx
+        // messageCard.jsx
         'py-2 px-2 rounded-md max-w-[50%] self-start bg-white',
         'py-2 px-2 rounded-md max-w-[50%] self-end bg-green-400',
 
-        // Status.jsx
+        // status.jsx
         'flex items-center px-[14vw] py-[7vh]',
         'left h-[85vh] bg-slate-900 lg:w-[30%] w-[50%] px-5',
         'pt-5 h-[13%]',
