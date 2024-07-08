@@ -121,6 +121,16 @@ module.exports = {
         'w-full outline-none border-b-2 border-green-700 px-2 bg-transparent',
         'py-10 bg-slate-200 flex items-center justify-center',
         'bg-green-700 rounded-full p-4',
-        'text-white font-bold text-3xl'
+        'text-white font-bold text-3xl',
+
+        // SignIn.jsx
+        'flex justify-center h-screen items-center',
+        'w-[30%] p-10 shadow-md bg-white',
+        'space-y-5',
+        'mb-2',
+        'py-2 outline outline-green-600 w-full rounded-md border',
+        'w-full bg-green-600',
+        'flex space-x-3 items-center mt-5',
+        'm-0',
     ]
 }
