@@ -1,25 +1,46 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Alert, Button, Snackbar} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import {green} from "@mui/material/colors";
+import {signIn, userProfile} from "../../redux/auth/Action";
+import {useDispatch, useSelector} from "react-redux";
 
 const SignIn = () => {
     const navigate = useNavigate();
     const [inputData, setInputData] = useState({email: '', password: ''});
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const dispatch = useDispatch();
+    const {auth} = useSelector(store => store);
+    const jwt = localStorage.getItem('jwt');
+
+
     const handleSignIn = (e) => {
         e.preventDefault();
-        console.log('Handle sign in');
+        console.log('handle submit', inputData);
+        dispatch(signIn(inputData));
         setOpenSnackbar(true);
     }
 
-    const handleChange = () => {
-
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setInputData((values) => ({...values, [name]: value}));
     }
 
     const handleSnackbarClose = () => {
-
+        setOpenSnackbar(false);
     }
+
+    useEffect(() => {
+        if (jwt) {
+            dispatch(userProfile(jwt));
+        }
+    }, [jwt])
+
+    useEffect(() => {
+        if (auth.userProfile?.fullName) {
+            navigate('/')
+        }
+    }, [auth.userProfile])
 
     return (
         <div>
@@ -30,6 +51,7 @@ const SignIn = () => {
                             <p className='mb-2'>Email</p>
                             <input
                                 placeholder='Enter your Email'
+                                name='email'
                                 value={inputData.email}
                                 onChange={handleChange}
                                 type='text' className='py-2 outline outline-green-600 w-full rounded-md border'
@@ -39,6 +61,7 @@ const SignIn = () => {
                             <p className='mb-2'>Password</p>
                             <input
                                 placeholder='Enter your Password'
+                                name='password'
                                 value={inputData.password}
                                 onChange={handleChange}
                                 type='password' className='py-2 outline outline-green-600 w-full rounded-md border'

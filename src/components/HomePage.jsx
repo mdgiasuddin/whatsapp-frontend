@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TbCircleDashed} from "react-icons/tb";
 import {BiCommentDetail} from "react-icons/bi";
 import {AiOutlineSearch} from "react-icons/ai";
@@ -11,6 +11,8 @@ import Profile from "./profile/Profile";
 import {useNavigate} from "react-router-dom";
 import {Menu, MenuItem} from "@mui/material";
 import CreateGroup from "./group/CreateGroup";
+import {useDispatch, useSelector} from "react-redux";
+import {logout, userProfile} from "../redux/auth/Action";
 
 const HomePage = () => {
     const [querys, setQuerys] = useState(null);
@@ -19,6 +21,9 @@ const HomePage = () => {
     const [showProfile, setShowProfile] = useState(false);
     const [showGroup, setShowGroup] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {auth} = useSelector(store => store);
+    const jwt = localStorage.getItem('jwt');
 
     const handleSearch = () => {
     }
@@ -50,6 +55,23 @@ const HomePage = () => {
         setShowGroup(true);
     }
 
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate('/signIn');
+    }
+
+    useEffect(() => {
+        if (jwt) {
+            dispatch(userProfile(jwt));
+        }
+    }, [jwt])
+
+    useEffect(() => {
+        if (!auth.userProfile) {
+            navigate('/signup');
+        }
+    }, [auth.userProfile])
+
     return (
         <div>
             <div className='py-14 bg-green-500 w-full'></div>
@@ -72,7 +94,7 @@ const HomePage = () => {
                                     src='https://cdn.pixabay.com/photo/2023/04/28/20/39/bee-7957348_1280.jpg'
                                     alt=''
                                 />
-                                <p>username</p>
+                                <p>{auth.userProfile.fullName}</p>
                             </div>
                             <div className='space-x-3 text-2xl flex'>
                                 <TbCircleDashed className='cursor-pointer' onClick={() => navigate('/status')}/>
@@ -98,7 +120,7 @@ const HomePage = () => {
                                     >
                                         <MenuItem onClick={handleClose}>Profile</MenuItem>
                                         <MenuItem onClick={handleCreateGroup}>Create Group</MenuItem>
-                                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                     </Menu>
                                 </div>
 
@@ -157,7 +179,7 @@ const HomePage = () => {
                                 <img className='w-10 h-10 rounded-full'
                                      src='https://cdn.pixabay.com/photo/2013/10/09/02/27/lake-192990_640.jpg' alt=''
                                 />
-                                <p>Username</p>
+                                <p>{auth.userProfile?.fullName}</p>
                             </div>
                             <div className='py-3 flex space-x-4 items-center px-3'>
                                 <AiOutlineSearch/>

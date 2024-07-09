@@ -1,31 +1,51 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Alert, Button, Snackbar} from "@mui/material";
 import {green} from "@mui/material/colors";
+import {useDispatch, useSelector} from "react-redux";
+import {signup, userProfile} from "../../redux/auth/Action";
 
 const Signup = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const navigate = useNavigate();
     const [inputData, setInputData] = useState({fullName: '', email: '', password: ''});
+    const {auth} = useSelector(store => store);
+    const dispatch = useDispatch();
+    const jwt = localStorage.getItem('jwt');
 
-    const handleSubmit = (e) => {
+    const handleSignup = (e) => {
         e.preventDefault();
-        console.log('handle submit');
+        console.log('handle submit', inputData);
+        dispatch(signup(inputData));
         setOpenSnackbar(true);
     }
 
-    const handleChange = () => {
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setInputData((values) => ({...values, [name]: value}));
     }
 
     const handleSnackbarClose = () => {
         setOpenSnackbar(false);
     }
 
+    useEffect(() => {
+        if (jwt) {
+            dispatch(userProfile(jwt));
+        }
+    }, [jwt])
+
+    useEffect(() => {
+        if (auth.userProfile?.fullName) {
+            navigate('/')
+        }
+    }, [auth.userProfile])
+
     return (
         <div>
             <div className='flex justify-center h-screen items-center'>
                 <div className='w-[30%] p-10 shadow-md bg-white'>
-                    <form onSubmit={handleSubmit} className='space-y-5'>
+                    <form onSubmit={handleSignup} className='space-y-5'>
                         <div>
                             <p className='mb-2'>Full Name</p>
                             <input

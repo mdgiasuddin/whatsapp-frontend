@@ -1,5 +1,5 @@
 import {BASE_API_URL} from "../../config/Api";
-import {SEARCH_USER, SIGN_IN, SIGNUP, UPDATE_USER, USER_PROFILE} from "./ActionType";
+import {LOGOUT, SEARCH_USER, SIGN_IN, SIGNUP, UPDATE_USER, USER_PROFILE} from "./ActionType";
 
 export const signup = (data) => async (dispatch) => {
     try {
@@ -13,6 +13,10 @@ export const signup = (data) => async (dispatch) => {
 
         const responseData = await res.json();
         console.log('Signup', responseData);
+        if (responseData.jwt) {
+            localStorage.setItem('jwt', responseData.jwt);
+        }
+
         dispatch({type: SIGNUP, payload: responseData})
     } catch (error) {
         console.log('Signup error', error);
@@ -30,6 +34,9 @@ export const signIn = (data) => async (dispatch) => {
         })
         const responseData = await res.json();
         console.log('SignIn', responseData);
+        if (responseData.jwt) {
+            localStorage.setItem('jwt', responseData.jwt);
+        }
         dispatch({type: SIGN_IN, payload: responseData})
     } catch (error) {
         console.log('signIn error', error);
@@ -85,4 +92,10 @@ export const updateUser = (data) => async (dispatch) => {
     } catch (error) {
         console.log('Update user error', error);
     }
+}
+
+export const logout = () => async (dispatch) => {
+    localStorage.removeItem('jwt');
+    dispatch({type: LOGOUT, payload: null});
+    dispatch({type: USER_PROFILE, payload: null});
 }
