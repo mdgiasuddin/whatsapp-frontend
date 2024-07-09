@@ -123,7 +123,7 @@ module.exports = {
         'bg-green-700 rounded-full p-4',
         'text-white font-bold text-3xl',
 
-        // SignIn.jsx
+        // signIn.jsx
         'flex justify-center h-screen items-center',
         'w-[30%] p-10 shadow-md bg-white',
         'space-y-5',

@@ -32,7 +32,7 @@ export const signIn = (data) => async (dispatch) => {
         console.log('SignIn', responseData);
         dispatch({type: SIGN_IN, payload: responseData})
     } catch (error) {
-        console.log('SignIn error', error);
+        console.log('signIn error', error);
     }
 }
 

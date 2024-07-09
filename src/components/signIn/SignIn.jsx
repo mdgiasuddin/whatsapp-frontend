@@ -65,7 +65,7 @@ const SignIn = () => {
                     severity="success"
                     sx={{width: '100%'}}
                 >
-                    This is a success Alert inside a Snackbar!
+                    You are successfully signed in!
                 </Alert>
             </Snackbar>
         </div>
