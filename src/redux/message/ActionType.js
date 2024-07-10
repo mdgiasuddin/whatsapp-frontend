@@ -1,0 +1,2 @@
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const GET_CHAT_MESSAGES = 'GET_ALL_MESSAGES';

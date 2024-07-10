@@ -54,7 +54,7 @@ const Signup = () => {
                                 placeholder='Enter full name'
                                 name='fullName'
                                 onChange={(e) => handleChange(e)}
-                                value={inputData.fullName}
+                                value={inputData?.fullName}
                             />
                         </div>
 

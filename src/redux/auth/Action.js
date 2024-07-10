@@ -60,13 +60,13 @@ export const userProfile = (token) => async (dispatch) => {
     }
 }
 
-export const searchUser = (data) => async (dispatch) => {
+export const searchUser = (query, token) => async (dispatch) => {
     try {
-        const res = await fetch(`${BASE_API_URL}/api/users/search/${data.keyword}`, {
+        const res = await fetch(`${BASE_API_URL}/api/users/search/${query}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${data.token}`
+                'Authorization': `Bearer ${token}`
             },
         })
         const responseData = await res.json();
@@ -77,14 +77,15 @@ export const searchUser = (data) => async (dispatch) => {
     }
 }
 
-export const updateUser = (data) => async (dispatch) => {
+export const updateUser = (data, token) => async (dispatch) => {
     try {
         const res = await fetch(`${BASE_API_URL}/api/users`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${data.token}`
+                'Authorization': `Bearer ${token}`
             },
+            body: JSON.stringify(data)
         })
         const responseData = await res.json();
         console.log('Update user', responseData);

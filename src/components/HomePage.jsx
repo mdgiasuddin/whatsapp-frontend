@@ -12,10 +12,10 @@ import {useNavigate} from "react-router-dom";
 import {Menu, MenuItem} from "@mui/material";
 import CreateGroup from "./group/CreateGroup";
 import {useDispatch, useSelector} from "react-redux";
-import {logout, userProfile} from "../redux/auth/Action";
+import {logout, searchUser, userProfile} from "../redux/auth/Action";
 
 const HomePage = () => {
-    const [querys, setQuerys] = useState(null);
+    const [query, setQuery] = useState('');
     const [currentChat, setCurrentChat] = useState(null);
     const [messageContent, setMessageContent] = useState('');
     const [showProfile, setShowProfile] = useState(false);
@@ -25,7 +25,10 @@ const HomePage = () => {
     const {auth} = useSelector(store => store);
     const jwt = localStorage.getItem('jwt');
 
-    const handleSearch = () => {
+    const handleSearch = (query) => {
+        if (query) {
+            dispatch(searchUser(query, jwt));
+        }
     }
     const handleSendMessage = () => {
     }
@@ -94,7 +97,7 @@ const HomePage = () => {
                                     src='https://cdn.pixabay.com/photo/2023/04/28/20/39/bee-7957348_1280.jpg'
                                     alt=''
                                 />
-                                <p>{auth.userProfile.fullName}</p>
+                                <p>{auth.userProfile?.fullName}</p>
                             </div>
                             <div className='space-x-3 text-2xl flex'>
                                 <TbCircleDashed className='cursor-pointer' onClick={() => navigate('/status')}/>
@@ -133,10 +136,10 @@ const HomePage = () => {
                                 type='text'
                                 placeholder='Search or start new chat'
                                 onChange={(e) => {
-                                    setQuerys(e.target.value)
+                                    setQuery(e.target.value)
                                     handleSearch(e.target.value)
                                 }}
-                                value={querys}
+                                value={query}
                             />
                             <AiOutlineSearch className='left-5 top-7 absolute'/>
 
@@ -148,10 +151,10 @@ const HomePage = () => {
                         {/*All users*/}
                         <div className='bg-white overflow-y-scroll h-[72vh] px-3'>
                             {
-                                querys && [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item) =>
+                                query && auth.searchedUsers?.map((item) =>
                                     <div onClick={handleClickChatUser}>
                                         <hr/>
-                                        <ChatCard/>
+                                        <ChatCard chatUser={item}/>
                                     </div>)
                             }
                         </div>
