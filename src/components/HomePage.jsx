@@ -13,6 +13,7 @@ import {Menu, MenuItem} from "@mui/material";
 import CreateGroup from "./group/CreateGroup";
 import {useDispatch, useSelector} from "react-redux";
 import {logout, searchUser, userProfile} from "../redux/auth/Action";
+import {createSingleChat, getUsersChats} from "../redux/chat/Action";
 
 const HomePage = () => {
     const [query, setQuery] = useState('');
@@ -22,7 +23,7 @@ const HomePage = () => {
     const [showGroup, setShowGroup] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {auth} = useSelector(store => store);
+    const {auth, chat, message} = useSelector(store => store);
     const jwt = localStorage.getItem('jwt');
 
     const handleSearch = (query) => {
@@ -32,8 +33,11 @@ const HomePage = () => {
     }
     const handleSendMessage = () => {
     }
-    const handleClickChatUser = () => {
-        setCurrentChat(true)
+
+    const handleClickChatUser = (userId) => {
+        setCurrentChat(true);
+        dispatch(createSingleChat({'userId': userId}, jwt));
+        setQuery('');
     }
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -74,6 +78,10 @@ const HomePage = () => {
             navigate('/signup');
         }
     }, [auth.userProfile])
+
+    useEffect(() => {
+        dispatch(getUsersChats(jwt));
+    }, [chat.singleChat, chat.groupChat])
 
     return (
         <div>
@@ -152,9 +160,43 @@ const HomePage = () => {
                         <div className='bg-white overflow-y-scroll h-[72vh] px-3'>
                             {
                                 query && auth.searchedUsers?.map((item) =>
-                                    <div onClick={handleClickChatUser}>
+                                    <div onClick={() => handleClickChatUser(item.id)}>
                                         <hr/>
-                                        <ChatCard chatUser={item}/>
+                                        <ChatCard
+                                            chatName={item.fullName}
+                                            chatImg={item.profilePicture ||
+                                                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
+                                            }
+                                        />
+                                    </div>)
+                            }
+
+                            {
+                                !query && chat.userChats?.map((item) =>
+                                    <div onClick={() => handleClickChatUser(item.id)}>
+                                        <hr/>
+
+                                        {item.groupChat ? (
+                                            <ChatCard
+                                                chatName={item.fullName}
+                                                chatImg={item.profilePicture ||
+                                                    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
+                                                }
+                                            />
+                                        ) : (
+                                            <ChatCard
+                                                chatName={
+                                                    auth.userProfile?.id === item.participants[0]?.id
+                                                        ? item.participants[1]?.fullName : item.participants[0]?.fullName
+                                                }
+                                                chatImg={
+                                                    auth.userProfile?.id === item.participants[0]?.id
+                                                        ? (item.participants[1]?.profilePicture || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png')
+                                                        : (item.participants[0]?.profilePicture || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png')
+                                                }
+                                            />
+                                        )
+                                        }
                                     </div>)
                             }
                         </div>

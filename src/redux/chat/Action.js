@@ -1,7 +1,7 @@
 import {BASE_API_URL} from "../../config/Api";
 import {CREATE_GROUP_CHAT, CREATE_SINGLE_CHAT, GET_USERS_CHAT} from "./ActionType";
 
-export const createChat = (data, token) => async (dispatch) => {
+export const createSingleChat = (data, token) => async (dispatch) => {
     try {
         const res = await fetch(`${BASE_API_URL}/api/chats/single`, {
             method: 'POST',
