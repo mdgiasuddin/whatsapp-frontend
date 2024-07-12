@@ -14,6 +14,7 @@ import CreateGroup from "./group/CreateGroup";
 import {useDispatch, useSelector} from "react-redux";
 import {logout, searchUser, userProfile} from "../redux/auth/Action";
 import {createSingleChat, getUsersChats} from "../redux/chat/Action";
+import {getChatMessages, sendMessage} from "../redux/message/Action";
 
 const HomePage = () => {
     const [query, setQuery] = useState('');
@@ -32,12 +33,20 @@ const HomePage = () => {
         }
     }
     const handleSendMessage = () => {
+        if (messageContent) {
+            dispatch(sendMessage({'chatId': currentChat.id, 'content': messageContent}, jwt));
+        }
+        setMessageContent('');
     }
 
     const handleClickChatUser = (userId) => {
         setCurrentChat(true);
         dispatch(createSingleChat({'userId': userId}, jwt));
         setQuery('');
+    }
+
+    const handleCurrentChat = (item) => {
+        setCurrentChat(item);
     }
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -82,6 +91,12 @@ const HomePage = () => {
     useEffect(() => {
         dispatch(getUsersChats(jwt));
     }, [chat.singleChat, chat.groupChat])
+
+    useEffect(() => {
+        if (currentChat) {
+            dispatch(getChatMessages(currentChat?.id, jwt));
+        }
+    }, [currentChat, message.newMessage])
 
     return (
         <div>
@@ -173,7 +188,7 @@ const HomePage = () => {
 
                             {
                                 !query && chat.userChats?.map((item) =>
-                                    <div onClick={() => handleClickChatUser(item.id)}>
+                                    <div onClick={() => handleCurrentChat(item)}>
                                         <hr/>
 
                                         {item.groupChat ? (
@@ -222,9 +237,19 @@ const HomePage = () => {
                         <div className='flex justify-between'>
                             <div className='py-3 space-x-4 flex items-center px-3'>
                                 <img className='w-10 h-10 rounded-full'
-                                     src='https://cdn.pixabay.com/photo/2013/10/09/02/27/lake-192990_640.jpg' alt=''
+                                     src={currentChat?.groupChat ? (currentChat.profilePicture ||
+                                             'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png') :
+                                         (auth.userProfile?.id === currentChat.participants[0]?.id
+                                             ? (currentChat.participants[1]?.profilePicture || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png')
+                                             : (currentChat.participants[0]?.profilePicture || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'))
+
+                                     }
                                 />
-                                <p>{auth.userProfile?.fullName}</p>
+                                <p>
+                                    {currentChat?.groupChat ? currentChat?.name :
+                                        (auth.userProfile?.id === currentChat.participants[0]?.id ? currentChat.participants[1]?.fullName : currentChat.participants[0]?.fullName)
+                                    }
+                                </p>
                             </div>
                             <div className='py-3 flex space-x-4 items-center px-3'>
                                 <AiOutlineSearch/>
@@ -236,9 +261,9 @@ const HomePage = () => {
                     {/*Message section*/}
                     <div className='px-10 h-[85vh] overflow-y-scroll'>
                         <div className='space-y-1 flex flex-col justify-center mt-20 py-2'>
-                            {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item, i) => <MessageCard
-                                isReqUserMessage={i % 2 === 0}
-                                content={'Message'}/>)}
+                            {message.chatMessages?.map((item, i) => <MessageCard
+                                isReqUserMessage={auth.userProfile?.id === item.user.id}
+                                content={item.content}/>)}
                         </div>
                     </div>
 
@@ -257,7 +282,6 @@ const HomePage = () => {
                                 onKeyPress={(e) => {
                                     if (e.key === 'Enter') {
                                         handleSendMessage();
-                                        setMessageContent('')
                                     }
                                 }}
                             />
