@@ -3,19 +3,27 @@ import {BsArrowLeft, BsArrowRight} from "react-icons/bs";
 import SelectedMember from "./SelectedMember";
 import ChatCard from "../chatCard/ChatCard";
 import NewGroup from "./NewGroup";
+import {searchUser} from "../../redux/auth/Action";
+import {useDispatch, useSelector} from "react-redux";
 
-const CreateGroup = () => {
+const CreateGroup = ({setShowGroup}) => {
     const [newGroup, setNewGroup] = useState(false);
     const [groupMembers, setGroupMembers] = useState(new Set());
     const [query, setQuery] = useState('');
+    const jwt = localStorage.getItem('jwt');
+    const dispatch = useDispatch();
+    const {auth} = useSelector(store => store);
+
 
     const handleRemoveMember = (item) => {
         groupMembers.delete(item);
         setGroupMembers(groupMembers);
     }
 
-    const handleSearch = () => {
-
+    const handleSearch = (keyword) => {
+        if (keyword) {
+            dispatch(searchUser(keyword, jwt));
+        }
     }
 
     return (
@@ -49,22 +57,24 @@ const CreateGroup = () => {
 
                         <div className='bg-white overflow-y-scroll h-[50.2vh]'>
                             {query &&
-                                [1, 1, 1, 1, 1, 1, 1, 1, 1].map((item) => <div onClick={() => {
+                                auth.searchedUsers.map((item) => <div onClick={() => {
                                     groupMembers.add(item)
                                     setGroupMembers(groupMembers)
                                     setQuery('')
                                 }} key={item?.id}
                                 >
                                     <hr/>
-                                    <ChatCard/>
+                                    <ChatCard chatName={item.fullName}
+                                              chatImg={item.profilePicture ||
+                                                  'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'}/>
                                 </div>)}
                         </div>
 
                         <div className='bottom-10 py-10 bg-slate-200 flex items-center justify-center'>
                             <div className='bg-green-800 rounded-full p-4 cursor-pointer'
                                  onClick={() => {
-                                setNewGroup(true)
-                            }}>
+                                     setNewGroup(true)
+                                 }}>
                                 <BsArrowRight className='text-white font-bold text-3xl'></BsArrowRight>
                             </div>
 
@@ -73,7 +83,7 @@ const CreateGroup = () => {
                     </div>
                 )}
 
-            {newGroup && <NewGroup/>}
+            {newGroup && <NewGroup setShowGroup={setShowGroup} groupMembers={groupMembers}/>}
         </div>
     )
 }

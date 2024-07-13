@@ -16,7 +16,6 @@ const Profile = ({handleCloseProfile}) => {
     const handleNameChange = (e) => {
         setName(e.target.value);
     }
-
     return (
         <div className='w-full h-full'>
             <div className='flex items-center space-x-10 bg-green-900 text-white pt-16 px-10 pb-5'>

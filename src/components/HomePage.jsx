@@ -27,9 +27,9 @@ const HomePage = () => {
     const {auth, chat, message} = useSelector(store => store);
     const jwt = localStorage.getItem('jwt');
 
-    const handleSearch = (query) => {
-        if (query) {
-            dispatch(searchUser(query, jwt));
+    const handleSearch = (keyword) => {
+        if (keyword) {
+            dispatch(searchUser(keyword, jwt));
         }
     }
     const handleSendMessage = () => {
@@ -108,7 +108,7 @@ const HomePage = () => {
                     {showProfile &&
                         <div className='w-full h-full'><Profile handleCloseProfile={handleCloseProfile}/></div>}
 
-                    {showGroup && <CreateGroup/>}
+                    {showGroup && <CreateGroup setShowGroup={setShowGroup}/>}
 
 
                     {/* Home */}
@@ -193,8 +193,8 @@ const HomePage = () => {
 
                                         {item.groupChat ? (
                                             <ChatCard
-                                                chatName={item.fullName}
-                                                chatImg={item.profilePicture ||
+                                                chatName={item.name}
+                                                chatImg={item.image ||
                                                     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png'
                                                 }
                                             />

@@ -114,6 +114,7 @@ module.exports = {
         'cursor-pointer text-2xl font-bold',
         'text-xl font-semibold',
         'flex flex-col justify-center items-center my-12',
+        'h-20 w-20 rounded-full',
         'relative',
         'absolute top-[5rem] left-[6rem]',
         'hidden',
